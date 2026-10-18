@@ -4,7 +4,7 @@
 
 set -u
 
-SCRIPT_VERSION="1.0.1"
+SCRIPT_VERSION="1.0.2"
 UPSTREAM_URL="https://raw.githubusercontent.com/2Grey/awg-openwrt/refs/heads/master/amneziawg-feed-install.sh"
 UPSTREAM_MARKER='FEED_ROOT="https://2grey.github.io/awg-openwrt"'
 TMP_INSTALLER=""
