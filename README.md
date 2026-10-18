@@ -15,17 +15,12 @@
 
 ## Запуск
 
-Обычный запуск от `root` по SSH (скрипт запросит подтверждение `YES`):
+Запускайте от `root` по SSH. Подтверждение не запрашивается: после проверок и создания резервной копии скрипт сразу запускает установщик AWG.
 
 ```sh
 wget -O /tmp/amnezia_router_update.sh https://raw.githubusercontent.com/TMN88/amnezia_router_update/main/amnezia_router_update.sh && sh /tmp/amnezia_router_update.sh
 ```
 
-Пропустить вопрос подтверждения:
-
-```sh
-wget -O /tmp/amnezia_router_update.sh https://raw.githubusercontent.com/TMN88/amnezia_router_update/main/amnezia_router_update.sh && sh /tmp/amnezia_router_update.sh -y
-```
 
 ## После обновления
 
