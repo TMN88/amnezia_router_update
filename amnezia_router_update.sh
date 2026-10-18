@@ -4,12 +4,11 @@
 
 set -u
 
-SCRIPT_VERSION="1.0.0"
+SCRIPT_VERSION="1.0.1"
 UPSTREAM_URL="https://raw.githubusercontent.com/2Grey/awg-openwrt/refs/heads/master/amneziawg-feed-install.sh"
 UPSTREAM_MARKER='FEED_ROOT="https://2grey.github.io/awg-openwrt"'
 TMP_INSTALLER=""
 BACKUP_DIR=""
-ASSUME_YES=0
 
 info() { printf '\n[INFO] %s\n' "$*"; }
 warn() { printf '\n[WARN] %s\n' "$*" >&2; }
@@ -21,17 +20,17 @@ trap 'exit 1' HUP INT TERM
 usage() {
     cat <<USAGE
 Amnezia Router Update v$SCRIPT_VERSION
-Usage: $0 [-y] [-h]
-  -y  skip confirmation prompt
+Usage: $0 [-h]
   -h  show this help
+
+Runs without an interactive confirmation prompt.
 
 Updates AmneziaWG packages only. It does not create or modify VPN interfaces.
 USAGE
 }
 
-while getopts ':yh' opt; do
+while getopts ':h' opt; do
     case "$opt" in
-        y) ASSUME_YES=1 ;;
         h) usage; exit 0 ;;
         *) usage >&2; exit 2 ;;
     esac
@@ -116,12 +115,7 @@ fi
 [ -z "$BOARD_JSON" ] || printf '%s\n' "$BOARD_JSON" > "$BACKUP_DIR/board.json"
 info "Backup created: $BACKUP_DIR"
 
-if [ "$ASSUME_YES" -ne 1 ]; then
-    printf '\nThis will update AWG packages from the signed 2Grey feed. The router will NOT reboot automatically.\n'
-    printf 'Type YES to continue: '
-    IFS= read -r answer || answer=""
-    [ "$answer" = YES ] || { info "Cancelled. No package changes were made. Backup retained at $BACKUP_DIR"; exit 0; }
-fi
+info "No confirmation prompt: proceeding with the AWG package update. The router will NOT reboot automatically."
 
 TMP_INSTALLER="/tmp/amneziawg-feed-install-$$.sh"
 info "Downloading upstream installer..."
